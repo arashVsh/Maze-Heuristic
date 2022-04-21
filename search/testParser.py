@@ -15,22 +15,24 @@
 import re
 import sys
 
+
+def removeComments(rawlines):
+    # remove any portion of a line following a '#' symbol
+    fixed_lines = []
+    for l in rawlines:
+        idx = l.find('#')
+        if idx == -1:
+            fixed_lines.append(l)
+        else:
+            fixed_lines.append(l[0:idx])
+    return '\n'.join(fixed_lines)
+
+
 class TestParser(object):
 
     def __init__(self, path):
         # save the path to the test file
         self.path = path
-
-    def removeComments(self, rawlines):
-        # remove any portion of a line following a '#' symbol
-        fixed_lines = []
-        for l in rawlines:
-            idx = l.find('#')
-            if idx == -1:
-                fixed_lines.append(l)
-            else:
-                fixed_lines.append(l[0:idx])
-        return '\n'.join(fixed_lines)
 
     def parse(self):
         # read in the test case and remove comments
@@ -38,14 +40,14 @@ class TestParser(object):
         with open(self.path) as handle:
             raw_lines = handle.read().split('\n')
 
-        test_text = self.removeComments(raw_lines)
+        test_text = removeComments(raw_lines)
         test['__raw_lines__'] = raw_lines
         test['path'] = self.path
         test['__emit__'] = []
         lines = test_text.split('\n')
         i = 0
         # read a property in each loop cycle
-        while(i < len(lines)):
+        while i < len(lines):
             # skip blank lines
             if re.match('\A\s*\Z', lines[i]):
                 test['__emit__'].append(("raw", raw_lines[i]))
@@ -68,7 +70,7 @@ class TestParser(object):
                 test['__emit__'].append(("multiline", m.group(1)))
                 i += 1
                 continue
-            print 'error parsing test file: %s' % self.path
+            print('error parsing test file: %s' % self.path)
             sys.exit(1)
         return test
 

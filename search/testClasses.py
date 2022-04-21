@@ -21,11 +21,12 @@ import sys
 # Class which models a question in a project.  Note that questions have a
 # maximum number of points they are worth, and are composed of a series of
 # test cases
-class Question(object):
+def raiseNotDefined():
+    print('Method not implemented: %s' % inspect.stack()[1][3])
+    sys.exit(1)
 
-    def raiseNotDefined(self):
-        print 'Method not implemented: %s' % inspect.stack()[1][3]
-        sys.exit(1)
+
+class Question(object):
 
     def __init__(self, questionDict, display):
         self.maxPoints = int(questionDict['max_points'])
@@ -44,7 +45,8 @@ class Question(object):
         self.testCases.append((testCase, thunk))
 
     def execute(self, grades):
-        self.raiseNotDefined()
+        raiseNotDefined()
+
 
 # Question in which all test cases must be passed in order to receive credit
 class PassAllTestsQuestion(Question):
@@ -60,6 +62,7 @@ class PassAllTestsQuestion(Question):
             grades.fail("Tests failed.")
         else:
             grades.assignFullCredit()
+
 
 class ExtraCreditPassAllTestsQuestion(Question):
     def __init__(self, questionDict, display):
@@ -78,6 +81,7 @@ class ExtraCreditPassAllTestsQuestion(Question):
         else:
             grades.assignFullCredit()
             grades.addPoints(self.extraPoints)
+
 
 # Question in which predict credit is given for test cases with a ``points'' property.
 # All other tests are mandatory and must be passed.
@@ -116,6 +120,7 @@ class Q6PartialCreditQuestion(Question):
         if False in results:
             grades.assignZeroCredit()
 
+
 class PartialCreditQuestion(Question):
     """Fails any test which returns False, otherwise doesn't effect the grades object.
     Partial credit tests will add the required points."""
@@ -130,7 +135,6 @@ class PartialCreditQuestion(Question):
                 return False
 
 
-
 class NumberPassedQuestion(Question):
     """Grade is the number of test cases passed."""
 
@@ -138,15 +142,13 @@ class NumberPassedQuestion(Question):
         grades.addPoints([f(grades) for _, f in self.testCases].count(True))
 
 
-
-
-
 # Template modeling a generic test case
-class TestCase(object):
+def raiseNotDefined():
+    print('Method not implemented: %s' % inspect.stack()[1][3])
+    sys.exit(1)
 
-    def raiseNotDefined(self):
-        print 'Method not implemented: %s' % inspect.stack()[1][3]
-        sys.exit(1)
+
+class TestCase(object):
 
     def getPath(self):
         return self.path
@@ -158,13 +160,13 @@ class TestCase(object):
         self.messages = []
 
     def __str__(self):
-        self.raiseNotDefined()
+        raiseNotDefined()
 
     def execute(self, grades, moduleDict, solutionDict):
-        self.raiseNotDefined()
+        raiseNotDefined()
 
     def writeSolution(self, moduleDict, filePath):
-        self.raiseNotDefined()
+        raiseNotDefined()
         return True
 
     # Tests should call the following messages for grading
@@ -192,7 +194,8 @@ class TestCase(object):
         extraCredit = max(0, points - maxPoints)
         regularCredit = points - extraCredit
 
-        grades.addMessage('%s: %s (%s of %s points)' % ("PASS" if points >= maxPoints else "FAIL", self.path, regularCredit, maxPoints))
+        grades.addMessage('%s: %s (%s of %s points)' % (
+            "PASS" if points >= maxPoints else "FAIL", self.path, regularCredit, maxPoints))
         if extraCredit > 0:
             grades.addMessage('EXTRA CREDIT: %s points' % (extraCredit,))
 
@@ -203,4 +206,3 @@ class TestCase(object):
 
     def addMessage(self, message):
         self.messages.extend(message.split('\n'))
-

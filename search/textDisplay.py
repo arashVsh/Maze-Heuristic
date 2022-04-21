@@ -23,6 +23,19 @@ SLEEP_TIME = 0 # This can be overwritten by __init__
 DISPLAY_MOVES = False
 QUIET = False # Supresses output
 
+
+def checkNullDisplay():
+    return True
+
+
+def draw(state):
+    print(state)
+
+
+def pause():
+    time.sleep(SLEEP_TIME)
+
+
 class NullGraphics:
     def initialize(self, state, isBlue = False):
         pass
@@ -30,30 +43,32 @@ class NullGraphics:
     def update(self, state):
         pass
 
-    def checkNullDisplay(self):
-        return True
-
-    def pause(self):
-        time.sleep(SLEEP_TIME)
-
-    def draw(self, state):
-        print state
-
     def updateDistributions(self, dist):
         pass
 
     def finish(self):
         pass
 
+
+def pause():
+    time.sleep(SLEEP_TIME)
+
+
+def draw(state):
+    print(state)
+
+
 class PacmanGraphics:
     def __init__(self, speed=None):
-        if speed != None:
+        self.turn = None
+        self.agentCounter = None
+        if speed is not None:
             global SLEEP_TIME
             SLEEP_TIME = speed
 
     def initialize(self, state, isBlue = False):
-        self.draw(state)
-        self.pause()
+        draw(state)
+        pause()
         self.turn = 0
         self.agentCounter = 0
 
@@ -64,18 +79,13 @@ class PacmanGraphics:
             self.turn += 1
             if DISPLAY_MOVES:
                 ghosts = [pacman.nearestPoint(state.getGhostPosition(i)) for i in range(1, numAgents)]
-                print "%4d) P: %-8s" % (self.turn, str(pacman.nearestPoint(state.getPacmanPosition()))),'| Score: %-5d' % state.score,'| Ghosts:', ghosts
+                print("%4d) P: %-8s" % (self.turn, str(pacman.nearestPoint(state.getPacmanPosition()))),
+                      '| Score: %-5d' % state.score, '| Ghosts:', ghosts)
             if self.turn % DRAW_EVERY == 0:
-                self.draw(state)
-                self.pause()
+                draw(state)
+                pause()
         if state._win or state._lose:
-            self.draw(state)
-
-    def pause(self):
-        time.sleep(SLEEP_TIME)
-
-    def draw(self, state):
-        print state
+            draw(state)
 
     def finish(self):
         pass
