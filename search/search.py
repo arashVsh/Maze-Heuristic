@@ -19,6 +19,13 @@ Pacman agents (in searchAgents.py).
 
 import util
 
+from game import Directions
+
+S = Directions.SOUTH
+W = Directions.WEST
+N = Directions.NORTH
+E = Directions.EAST
+
 
 class SearchProblem:
     """
@@ -63,44 +70,44 @@ class SearchProblem:
         util.raiseNotDefined()
 
 
-def tinyMazeSearch(problem):
+def sampleSearch(problem):
     """
     Returns a sequence of moves that solves tinyMaze.  For any other maze, the
     sequence of moves will be incorrect, so only use this for tinyMaze.
     """
-    from game import Directions
-    s = Directions.SOUTH
-    w = Directions.WEST
-    return [s, s, w, s, w, w, s, w]
+
+    return [S, S, W, S, W, W, S, W]
+
+
+def sampleSearch_2(problem):
+    """
+    نکته مهم:
+    با توجه به این که جهت جرکت pacman ابتدا به سمت شرق است, حرکت W ابتدایی باعث تغییر خانه pacman نمی شود, بلکه باعث تغییر جهت pacman به سمت غرب می شود.
+    """
+
+    return [W, W, W, W, S, S, E, S, S, W]
 
 
 def depthFirstSearch(problem):
-    """
-    Search the deepest nodes in the search tree first.
+    """*** Question 9 - Part 1 ***"""
+    """*** YOUR CODE HERE ***"""
+    return []
 
-    Your search algorithm needs to return a list of actions that reaches the
-    goal. Make sure to implement a graph search algorithm.
 
-    To get started, you might want to try some of these simple commands to
-    understand the search problem that is being passed in:
-
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
-    """
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+def aStarSearch(problem):
+    """*** Question 9 - Part 2 ***"""
+    """Search the node that has the lowest combined cost and heuristic first."""
+    """*** YOUR CODE HERE ***"""
+    return []
 
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
 
 
 def uniformCostSearch(problem):
-    """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
+    """Search the node of the least total cost first."""
     util.raiseNotDefined()
 
 
@@ -110,12 +117,6 @@ def nullHeuristic(state, problem=None):
     goal in the provided SearchProblem.  This heuristic is trivial.
     """
     return 0
-
-
-def aStarSearch(problem, heuristic=nullHeuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
 
 
 # Abbreviations

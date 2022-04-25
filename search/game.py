@@ -741,7 +741,8 @@ class Game:
             # Allow for game specific conditions (winning, losing, etc.)
             self.rules.process(self.state, self)
             # Track progress
-            if agentIndex == numAgents + 1: self.numMoves += 1
+            if agentIndex == numAgents + 1:
+                self.numMoves += 1
             # Next agent
             agentIndex = (agentIndex + 1) % numAgents
 
@@ -760,4 +761,4 @@ class Game:
                     self._agentCrash(agentIndex)
                     self.unmute()
                     return
-        self.display.finish()
+

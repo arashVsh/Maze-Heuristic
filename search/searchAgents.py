@@ -79,15 +79,13 @@ class SearchAgent(Agent):
         # Warning: some advanced Python magic is employed below to find the right functions and problems
 
         # Get the search function from the name and heuristic
-        self.actionIndex = None
-        self.actions = None
         if fn not in dir(search):
             raise AttributeError(fn + ' is not a search function in search.py.')
         func = getattr(search, fn)
-        if 'heuristic' not in func.func_code.co_varnames:
-            print('[SearchAgent] using function ' + fn)
-            self.searchFunction = func
-        else:
+      #  if 'heuristic' not in func.func_code.co_varnames:
+        print('[SearchAgent] using function ' + fn)
+        self.searchFunction = func
+        """else:
             if heuristic in globals().keys():
                 heur = globals()[heuristic]
             elif heuristic in dir(search):
@@ -96,7 +94,7 @@ class SearchAgent(Agent):
                 raise AttributeError(heuristic + ' is not a function in searchAgents.py or search.py.')
             print('[SearchAgent] using function %s and heuristic %s' % (fn, heuristic))
             # Note: this bit of Python trickery combines the search algorithm and the heuristic
-            self.searchFunction = lambda x: func(x, heuristic=heur)
+            self.searchFunction = lambda x: func(x, heuristic=heur)"""
 
         # Get the search problem type from the name
         if prob not in globals().keys() or not prob.endswith('Problem'):
@@ -113,8 +111,7 @@ class SearchAgent(Agent):
 
         state: a GameState object (pacman.py)
         """
-        if self.searchFunction is None:
-            raise Exception("No search function provided for SearchAgent")
+        if self.searchFunction == None: raise Exception("No search function provided for SearchAgent")
         starttime = time.time()
         problem = self.searchType(state)  # Makes a new search problem
         self.actions = self.searchFunction(problem)  # Find a path
@@ -130,8 +127,7 @@ class SearchAgent(Agent):
 
         state: a GameState object (pacman.py)
         """
-        if 'actionIndex' not in dir(self):
-            self.actionIndex = 0
+        if 'actionIndex' not in dir(self): self.actionIndex = 0
         i = self.actionIndex
         self.actionIndex += 1
         if i < len(self.actions):
@@ -161,8 +157,7 @@ class PositionSearchProblem(search.SearchProblem):
         """
         self.walls = gameState.getWalls()
         self.startState = gameState.getPacmanPosition()
-        if start is not None:
-            self.startState = start
+        if start != None: self.startState = start
         self.goal = goal
         self.costFn = costFn
         self.visualize = visualize
@@ -223,8 +218,7 @@ class PositionSearchProblem(search.SearchProblem):
         Returns the cost of a particular sequence of actions. If those actions
         include an illegal move, return 999999.
         """
-        if actions is None:
-            return 999999
+        if actions == None: return 999999
         x, y = self.getStartState()
         cost = 0
         for action in actions:
@@ -350,14 +344,12 @@ class CornersProblem(search.SearchProblem):
         Returns the cost of a particular sequence of actions.  If those actions
         include an illegal move, return 999999.  This is implemented for you.
         """
-        if actions is None:
-            return 999999
+        if actions == None: return 999999
         x, y = self.startingPosition
         for action in actions:
             dx, dy = Actions.directionToVector(action)
             x, y = int(x + dx), int(y + dy)
-            if self.walls[x][y]:
-                return 999999
+            if self.walls[x][y]: return 999999
         return len(actions)
 
 
@@ -382,15 +374,11 @@ def cornersHeuristic(state, problem):
 
 
 class AStarCornersAgent(SearchAgent):
-    """A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"""
+    "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
 
     def __init__(self):
         self.searchFunction = lambda prob: search.aStarSearch(prob, cornersHeuristic)
         self.searchType = CornersProblem
-
-
-def isGoalState(state):
-    return state[1].count() == 0
 
 
 class FoodSearchProblem:
@@ -413,8 +401,11 @@ class FoodSearchProblem:
     def getStartState(self):
         return self.start
 
+    def isGoalState(self, state):
+        return state[1].count() == 0
+
     def getSuccessors(self, state):
-        """Returns successor states, the actions they require, and a cost of 1."""
+        "Returns successor states, the actions they require, and a cost of 1."
         successors = []
         self._expanded += 1  # DO NOT CHANGE
         for direction in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
@@ -499,7 +490,7 @@ def findPathToClosestDot(gameState):
 
 
 class ClosestDotSearchAgent(SearchAgent):
-    """Search for all food using a sequence of searches"""
+    "Search for all food using a sequence of searches"
 
     def __init__(self, fn='depthFirstSearch', prob='PositionSearchProblem', heuristic='nullHeuristic'):
         super().__init__(fn, prob, heuristic)
@@ -508,8 +499,8 @@ class ClosestDotSearchAgent(SearchAgent):
     def registerInitialState(self, state):
         self.actions = []
         currentState = state
-        while currentState.getFood().count() > 0:
-            findPathToClosestDot(currentState)
+        while (currentState.getFood().count() > 0):
+            nextPathSegment = findPathToClosestDot(currentState)  # The missing piece
             self.actions += nextPathSegment
             for action in nextPathSegment:
                 legal = currentState.getLegalActions()

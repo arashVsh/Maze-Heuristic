@@ -99,7 +99,8 @@ class GameState:
         Returns the successor state after the specified agent takes the action.
         """
         # Check that successors exist
-        if self.isWin() or self.isLose(): raise Exception('Can\'t generate a successor of a terminal state.')
+        if self.isWin() or self.isLose():
+            raise Exception('Can\'t generate a successor of a terminal state.')
 
         # Copy current state
         state = GameState(self)
@@ -268,11 +269,8 @@ COLLISION_TOLERANCE = 0.7  # How close ghosts must be to Pacman to kill
 TIME_PENALTY = 1  # Number of points lost each round
 
 
-def agentCrash(game, agentIndex):
-    if agentIndex == 0:
-        print("Pacman crashed")
-    else:
-        print("A ghost crashed")
+def getMaxTimeWarnings(agentIndex):
+    return 0
 
 
 class ClassicGameRules:
@@ -298,23 +296,25 @@ class ClassicGameRules:
         """
         Checks to see whether it is time to end the game.
         """
-        if state.isWin():
-            self.win(state, game)
-        if state.isLose():
-            self.lose(state, game)
+        if state.isWin(): self.win(state, game)
+        if state.isLose(): self.lose(state, game)
 
     def win(self, state, game):
-        if not self.quiet:
-            print("Pacman emerges victorious! Score: %d" % state.data.score)
+        if not self.quiet: print("Pacman emerges victorious! Score: %d" % state.data.score)
         game.gameOver = True
 
     def lose(self, state, game):
-        if not self.quiet:
-            print("Pacman died! Score: %d" % state.data.score)
+        if not self.quiet: print("Pacman died! Score: %d" % state.data.score)
         game.gameOver = True
 
     def getProgress(self, game):
         return float(game.state.getNumFood()) / self.initialState.getNumFood()
+
+    def agentCrash(self, game, agentIndex):
+        if agentIndex == 0:
+            print("Pacman crashed")
+        else:
+            print("A ghost crashed")
 
     def getMaxTotalTime(self, agentIndex):
         return self.timeout
@@ -327,9 +327,6 @@ class ClassicGameRules:
 
     def getMoveTimeout(self, agentIndex):
         return self.timeout
-
-    def getMaxTimeWarnings(self, agentIndex):
-        return 0
 
 
 class PacmanRules:
@@ -384,7 +381,7 @@ class PacmanRules:
                 state.data.scoreChange += 500
                 state.data._win = True
         # Eat capsule
-        if position in state.getCapsules():
+        if (position in state.getCapsules()):
             state.data.capsules.remove(position)
             state.data._capsuleEaten = position
             # Reset all ghosts' scared timers
@@ -488,8 +485,7 @@ def default(str):
 
 
 def parseAgentArgs(str):
-    if str is None:
-        return {}
+    if str == None: return {}
     pieces = str.split(',')
     opts = {}
     for p in pieces:
@@ -600,7 +596,7 @@ def readCommand(argv):
     args['timeout'] = options.timeout
 
     # Special case: recorded games don't use the runGames method or args structure
-    if options.gameToReplay is not None:
+    if options.gameToReplay != None:
         print('Replaying recorded game %s.' % options.gameToReplay)
         import cPickle
         f = open(options.gameToReplay)
@@ -677,8 +673,7 @@ def runGames(layout, pacman, ghosts, display, numGames, record, numTraining=0, c
             rules.quiet = False
         game = rules.newGame(layout, pacman, ghosts, gameDisplay, beQuiet, catchExceptions)
         game.run()
-        if not beQuiet:
-            games.append(game)
+        if not beQuiet: games.append(game)
 
         if record:
             import time, cPickle
