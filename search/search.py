@@ -70,35 +70,50 @@ class SearchProblem:
         util.raiseNotDefined()
 
 
-def sampleSearch(problem):
+def sampleSearch(problem) -> list:
     """
-    Returns a sequence of moves that solves tinyMaze.  For any other maze, the
-    sequence of moves will be incorrect, so only use this for tinyMaze.
+        بر اساس لیستی از حرکات که توسط این تابع برگردانده می شود,
+         pacman به ترتیب دو خانه به جنوب یک خانه به غرب,
+       1 خانه به جنوب, دو خانه به غرب, یک خانه به جنوب و در آخر
+         یک خانه به غرب می رود تا به خانه هدف برسد
+    """
+
+    """
+        در توابع depthFirstSearch و aStartSearch الگوریتم شما
+         باید لیستی از حرکات مجاز را پیدا کند و برگرداند.
+    """
+
+    """
+           جرکتی که باعث برخورد pacman با دیوار شود, غیر مجاز است.
+            در صورتی که لیست برگردانده شده شامل حرکن غیر مجاز باشد,
+           برنامه با اعلام خطا در خط 353 فایل pacman.py متوقف می شود. 
     """
 
     return [S, S, W, S, W, W, S, W]
 
 
-def sampleSearch_2(problem):
+def sampleSearch_2(problem) -> list:
     """
-    نکته مهم:
-    با توجه به این که جهت جرکت pacman ابتدا به سمت شرق است, حرکت W ابتدایی باعث تغییر خانه pacman نمی شود, بلکه باعث تغییر جهت pacman به سمت غرب می شود.
+    مشابه با تابع sampleSearch لیستی از حرکات مجاز برای رسیدن به مقصد را بر می گرداند
     """
 
     return [W, W, W, W, S, S, E, S, S, W]
 
 
-def depthFirstSearch(problem):
-    """*** Question 9 - Part 1 ***"""
-    """*** YOUR CODE HERE ***"""
+""" ******************************************************************************** """
+
+
+def depthFirstSearch(problem) -> list:
+    """*** سوال 9 تمرین بخش اول ***"""
     return []
 
 
-def aStarSearch(problem):
-    """*** Question 9 - Part 2 ***"""
-    """Search the node that has the lowest combined cost and heuristic first."""
-    """*** YOUR CODE HERE ***"""
+def aStarSearch(problem) -> list:
+    """*** سوال 9 تمرین بخش دوم ***"""
     return []
+
+
+""" ******************************************************************************** """
 
 
 def breadthFirstSearch(problem):
