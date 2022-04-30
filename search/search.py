@@ -92,7 +92,7 @@ def sampleSearch(problem) -> list:
     return [S, S, W, S, W, W, S, W]
 
 
-def sampleSearch_2(problem) -> list:
+def sampleSearch2(problem) -> list:
     """
     مشابه با تابع sampleSearch لیستی از حرکات مجاز برای رسیدن به مقصد را بر می گرداند
     """
