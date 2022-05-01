@@ -72,21 +72,20 @@ class SearchProblem:
 
 def sampleSearch(problem) -> list:
     """
-        بر اساس لیستی از حرکات که توسط این تابع برگردانده می شود,
-         pacman به ترتیب دو خانه به جنوب یک خانه به غرب,
-       1 خانه به جنوب, دو خانه به غرب, یک خانه به جنوب و در آخر
-         یک خانه به غرب می رود تا به خانه هدف برسد
+   Based on the list of moves returned by this function, Pacman moves two cells to the south,
+   one cell to the west, one cell to the south, two cells to the west, one cell to the south,
+   and finally, one cell to the west. Pacman reached his goal.
     """
 
     """
-        در توابع depthFirstSearch و aStartSearch الگوریتم شما
-         باید لیستی از حرکات مجاز را پیدا کند و برگرداند.
+        In the functions “depthFirstSearch” and “aStarSearch”, 
+        your algorithm must find a sequence of legal moves and return it as a list.
     """
 
     """
-           جرکتی که باعث برخورد pacman با دیوار شود, غیر مجاز است.
-            در صورتی که لیست برگردانده شده شامل حرکن غیر مجاز باشد,
-           برنامه با اعلام خطا در خط 353 فایل pacman.py متوقف می شود. 
+         Any move that causes Pacman to hit the wall is illegal. 
+         If the returned list contains any illegal moves, the program stops by 
+         raising an exception in line 353 of the pacman.py file.
     """
 
     return [S, S, W, S, W, W, S, W]
