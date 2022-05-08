@@ -72,9 +72,9 @@ class SearchProblem:
 
 def sampleSearch(problem) -> list:
     """
-   Based on the list of moves returned by this function, Pacman moves two cells to the south,
-   one cell to the west, one cell to the south, two cells to the west, one cell to the south,
-   and finally, one cell to the west. Pacman reached his goal.
+       Based on the list of moves returned by this function, Pacman moves two cells to the south,
+       one cell to the west, one cell to the south, two cells to the west, one cell to the south,
+       and finally, one cell to the west. Pacman reached his goal.
     """
 
     """
@@ -92,10 +92,6 @@ def sampleSearch(problem) -> list:
 
 
 def sampleSearch2(problem) -> list:
-    """
-    مشابه با تابع sampleSearch لیستی از حرکات مجاز برای رسیدن به مقصد را بر می گرداند
-    """
-
     return [W, W, W, W, S, S, E, S, S, W]
 
 
@@ -103,12 +99,12 @@ def sampleSearch2(problem) -> list:
 
 
 def depthFirstSearch(problem) -> list:
-    """*** سوال 9 تمرین بخش اول ***"""
+    """*** Question 9 - Part 1 ***"""
     return []
 
 
 def aStarSearch(problem) -> list:
-    """*** سوال 9 تمرین بخش دوم ***"""
+    """*** Question 9 - Part 2 ***"""
     return []
 
 
