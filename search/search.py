@@ -18,80 +18,12 @@ Pacman agents (in searchAgents.py).
 """
 
 import util
-import pdb
-
 from game import Directions
 
 S = Directions.SOUTH
 W = Directions.WEST
 N = Directions.NORTH
 E = Directions.EAST
-
-tinyMap: list = [[1, 1, 1, 1, 1],
-                 [1, 0, 0, 0, 1],
-                 [1, 1, 0, 1, 1],
-                 [0, 1, 1, 1, 0],
-                 [1, 1, 0, 0, 0]]
-
-
-class Cell:
-    row: int
-    col: int
-    g: int
-    parents: list
-
-    def __init__(self, row, col, g, parents):
-        self.col = col
-        self.row = row
-        self.g = g
-        self.parents = parents
-
-    def reproduce(self, row, col, g, parents):
-        return Cell(row, col, g, parents)
-
-    def neighbors(self) -> list:
-        myList: list = []
-        #        pdb.set_trace()
-
-        if self.row > 0 and tinyMap[self.row - 1][self.col]:
-            myList.append(self.reproduce(self.row - 1, self.col, self.g + 1, self.parents + [self]))
-        if self.row < 4 and tinyMap[self.row + 1][self.col]:
-            myList.append(self.reproduce(self.row + 1, self.col, self.g + 1, self.parents + [self]))
-        if self.col > 0 and tinyMap[self.row][self.col - 1]:
-            myList.append(self.reproduce(self.row, self.col - 1, self.g + 1, self.parents + [self]))
-        if self.col < 4 and tinyMap[self.row][self.col + 1]:
-            myList.append(self.reproduce(self.row, self.col + 1, self.g + 1, self.parents + [self]))
-        return myList
-
-    def manhattanDistance(self) -> int:
-        return abs(self.row - 4) + abs(self.col - 0)
-
-    def cost(self) -> int:
-        return self.manhattanDistance() + self.g
-
-    def isGoal(self) -> bool:
-        return self.row == 4 and self.col == 0
-
-    def isEqualTo(self, cell) -> bool:
-        return self.row == cell.row and self.col == cell.col
-
-    def isIn(self, myList: list) -> bool:
-        for cell in myList:
-            if self.isEqualTo(cell):
-                return True
-        return False
-
-    def directionTo(self, nextCell) -> str:
-        if self.col == nextCell.col and nextCell.row == self.row + 1:
-            return S
-        if self.col == nextCell.col and nextCell.row == self.row - 1:
-            return N
-        if self.row == nextCell.row and nextCell.col == self.col + 1:
-            return E
-        return W
-
-    def __str__(self):
-        return '(' + str(self.row) + ', ' + str(self.col) + ', ' + str(self.g) + ')\n'
 
 
 class SearchProblem:
@@ -173,56 +105,14 @@ def sampleSearch2(problem) -> list:
 """ ******************************************************************************** """
 
 
-def directionsOf(cells: list[Cell]) -> list:
-    directionList: list = []
-    for i in range(len(cells) - 1):
-        directionList.append(cells[i].directionTo(cells[i + 1]))
-    return directionList
-
-
 def depthFirstSearch(problem) -> list:
     """*** Question 9 - Part 1 ***"""
-
-    start = Cell(0, 4, 0, [])
-    frontier: list[Cell] = [start]
-
-    while len(frontier) > 0:
-        targetNode: Cell = frontier.pop(0)
-
-        neighbors: list[Cell] = targetNode.neighbors()
-        newNeighbors: list[Cell] = list(filter(lambda neighbor: not(neighbor.isIn(targetNode.parents)) and not(neighbor.isIn(frontier)), neighbors))
-        frontier = newNeighbors + frontier
-        if targetNode.isGoal():
-            return directionsOf(targetNode.parents + [targetNode])
     return []
 
 
 def aStarSearch(problem) -> list:
     """*** Question 9 - Part 2 ***"""
-
-    start = Cell(0, 4, 0, [])
-    frontier: list[Cell] = [start]
-    bestGoal: Cell = Cell(4, 0, 1000, [])
-    goalFound: bool = False
-
-    while len(frontier) > 0:
-        targetNode: Cell = frontier.pop(0)
-        neighbors: list[Cell] = targetNode.neighbors()
-        newNeighbors: list[Cell] = list(filter(lambda neighbor: not(neighbor.isIn(targetNode.parents)) and not(neighbor.isIn(frontier)), neighbors))
-
-        for neighbor in newNeighbors:
-            for i in range(len(frontier)):
-                if neighbor.cost() < frontier[i].cost():
-                    frontier.insert(i, neighbor)
-                    break
-            else:
-                frontier.append(neighbor)
-
-        if targetNode.isGoal() and targetNode.cost() < bestGoal.cost():
-            bestGoal = targetNode
-            goalFound = True
-
-    return directionsOf(bestGoal.parents + [bestGoal]) if goalFound else []
+    return []
 
 
 """ ******************************************************************************** """
