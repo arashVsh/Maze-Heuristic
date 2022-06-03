@@ -90,8 +90,8 @@ def sampleSearch(problem) -> list:
     """
          Please, note the overall map, including the initial situation of Pacman, its goal, and walls, is always the same,
          however, it's on you to decide how to determine the coordinates of these elements.
-         For example, we can say the initial coordinate of Pacman is (1, 5) because it's in the 1st row and 5th column.
-         Similarly, we can say its goal's coordinate is (5, 1) because it's in the 5th row and 1st column.
+         For example, we can say the initial coordinate of Pacman is (5, 5) because it's in the 5th row and 5th column.
+         Similarly, we can say its goal's coordinate is (1, 1) because it's in the 1st row and 1st column.
          You must determine the coordinates of the walls and restrain Pacman from changing its state to one of these coordinates.
     """
 
@@ -112,6 +112,7 @@ def depthFirstSearch(problem) -> list:
 
 def aStarSearch(problem) -> list:
     """*** Question 9 - Part 2 ***"""
+    """ Use an appropriate heuristic function by your choice. """
     return []
 
 
